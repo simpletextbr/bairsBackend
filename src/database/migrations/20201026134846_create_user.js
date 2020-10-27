@@ -7,11 +7,13 @@ exports.up = function(knex) {
         colunm.string("phone", 11).notNullable();
         colunm.string("mail").notNullable();
         colunm.string("password").notNullable();
-        colunm.boolean("situation").notNullable();
+        colunm.string("situation").notNullable();
+        colunm.string("genre").notNullable();
+        colunm.string("period").notNullable();
+        colunm.string("study_shift").notNullable();
         colunm.integer("rate")
         colunm.string("registration_path")
         colunm.string("profile_path");
-        colunm.string("sex");
 
         
         colunm.integer("instituition_id").notNullable();
