@@ -1,12 +1,23 @@
 const connection = require("../database/conection");
 const bcrypt = require('bcryptjs');
 
-
 module.exports ={
     async index(request, response) {
         const { id }  = request.params;
 
-        const instituition = await connection("instituition").where("id", id).select('*');
+        const instituition = await connection("instituition").where("id", id).select(
+            "id",
+            'name',
+            'campus',
+            'address',
+            'neighborhood',
+            'number',
+            'CEP',
+            'city',
+            'uf',
+            "mail",
+            "phone"
+            );
 
         if(!instituition[0])
             return response.status(404).json({message: "Instituition not found"});
@@ -19,9 +30,8 @@ module.exports ={
 
         const verify_user = await connection('user').where("id", id).select("id", "username");
 
-        if(!verify_user[0]){
-            return response.status(404).json({message: "User not found"});
-        }
+        if(!verify_user[0])
+            return response.status(404).json({message: "Unauthorized"});
 
         const instituition = await connection("instituition").select(
             "id",
@@ -38,7 +48,7 @@ module.exports ={
             );
 
         if(!instituition[0])
-            return response.status(404).json({message: "No instituitions here!"});
+            return response.status(401).json({message: "Unauthorized"});
 
         return response.status(200).json(instituition)
     },
@@ -64,8 +74,8 @@ module.exports ={
         
         password = hash
 
-        const verify_phone = await connection("instituition").where("phone", phone).first();
-        const verify_mail = await connection("instituition").where("mail", mail).first();
+        const verify_phone = await connection("instituition").where("phone", phone).select("phone").first();
+        const verify_mail = await connection("instituition").where("mail", mail).select("mail").first();
 
         if(!verify_mail && !verify_phone){
            await connection("instituition").insert({
@@ -84,9 +94,9 @@ module.exports ={
 
             return response.status(200).json({send: "sucessfull"});
         } else if(verify_mail){
-            return response.status(401).json({message: "Este email Já possui cadastro ativo"})
+            return response.status(401).json({message: "this email already has an active account"})
         }else
-            return response.status(401).json({message: "Este telefone Já possui cadastro ativo"})
+            return response.status(401).json({message: "this phone already has an active account"})
                
     },
 
@@ -117,10 +127,10 @@ module.exports ={
         const compare = bcrypt.compareSync(olderPass, setOlderPass);
 
         if(compare === false)
-            return response.status(401).json({message: "A sua senha antiga não esta certa, por favor digite novamente!"});
+            return response.status(401).json({message: "your old password is wrong, please try again!"});
 
         if(newPassword!==repeatNewPassword)
-            return response.status(401).json({message: "As suas novas senhas não coincidem, por favor digite novamente!"});
+            return response.status(401).json({message: "your new passwords don't match, please try again!"});
 
 
         const salt = bcrypt.genSaltSync(16);
