@@ -10,6 +10,7 @@ const userController = require('./Controllers/UserController');
 const instituitionController = require('./Controllers/InstituitionController');
 const classroomController = require("./Controllers/ClassroomController")
 const passwordController = require("./Controllers/PasswordController");
+const categoryController = require("./Controllers/CagegoryController");
 
 const routes = express.Router();
 
@@ -44,6 +45,13 @@ routes.get('/classroom/:id', classroomController.index);
 routes.post('/classroom/register', classroomController.create);
 routes.put('/classroom/update/:id', classroomController.update);
 routes.delete('/classroom/delete/:id', classroomController.delete);
+
+//Rotas Dedicadas as Categorias
+routes.get('/category', categoryController.show);
+routes.get('/category/:id', categoryController.index);
+routes.post('/category/register', categoryController.create);
+routes.put('/category/update/:id', categoryController.update);
+routes.delete('/category/delete/:id', categoryController.delete);
 
 
 

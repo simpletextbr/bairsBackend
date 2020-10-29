@@ -17,6 +17,10 @@ module.exports = {
             "period",
             "study_shift",
             "rate",
+            "registration_path",
+            "profile_path",
+            "instituition_id",
+            "classroom_id"
             );
 
         if(!user[0])
@@ -45,6 +49,10 @@ module.exports = {
             "period",
             "study_shift",
             "rate",
+            "registration_path",
+            "profile_path",
+            "instituition_id",
+            "classroom_id"
             );
 
         if(!user[0])
