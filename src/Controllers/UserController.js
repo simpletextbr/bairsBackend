@@ -108,5 +108,58 @@ module.exports = {
                
     },
 
+    async update(request, response) {
+        const { id } = request.params;
+
+        const verify_user = await connection("user").where("id", id).select("*").first();
+
+        if(!verify_user)
+            return response.status(404).json({message: "User not found"});
+        
+        const {
+            full_name,
+            username,
+            birth,
+            phone,
+            mail,
+            genre,
+            period,
+            study_shift,
+        } = request.body;
+
+        let { password } = request.body;
+        let setOlderPass = verify_user.password;
+
+        const compare = bcrypt.compareSync(password, setOlderPass);
+    
+        if(compare === false)
+            return response.status(401).json({message: "your password is wrong, please try again!"});
+
+        await connection("user").update({
+            full_name,
+            username,
+            birth,
+            phone,
+            mail,
+            genre,
+            period,
+            study_shift
+            }).where({ id })
+
+        return response.status(200).json({send: "sucessfull"});
+    }, 
+
+    async delete(request, response) {
+        const { id } = request.params;
+
+        const verifyId = await connection("user").where("id", id).first();
+
+        if(!verifyId)
+            return response.status(404).json({message: "User not found"});
+        
+        await connection("user").where("id", id).delete();
+
+        return response.status(204).send();
+        }
     
 }

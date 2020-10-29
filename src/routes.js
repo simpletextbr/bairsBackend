@@ -9,6 +9,7 @@ const uploadConfigImages = require('./config/images')
 const userController = require('./Controllers/UserController');
 const instituitionController = require('./Controllers/InstituitionController');
 const classroomController = require("./Controllers/ClassroomController")
+const passwordController = require("./Controllers/PasswordController");
 
 const routes = express.Router();
 
@@ -22,8 +23,8 @@ const uploadImages = multer(uploadConfigImages)
 routes.get('/user', userController.show);
 routes.get('/user/:id', userController.index);
 routes.post('/user/register', uploadPhoto.single("profile_path"), userController.create);
-//routes.put('/user/update/:id', userController.update);
-//routes.delete('/user/delete/:id', userController.delete);
+routes.put('/user/update/:id', userController.update);
+routes.delete('/user/delete/:id', userController.delete);
 
 
 //Rotas Dedicadas as Instituições
@@ -32,6 +33,9 @@ routes.get('/instituitions/:id', instituitionController.index);
 routes.post('/instituitions/register', instituitionController.create);
 routes.put('/instituitions/update/:id', instituitionController.update);
 routes.delete('/instituitions/delete/:id', instituitionController.delete);
+
+//Rotas dedicadas as Controle de Senhas
+routes.put('/instituition/changepassword/:id', passwordController.update_pass_instituition);
 
 //Rotas Dedicadas as Salas de aula
 routes.get('/classroom', classroomController.show);

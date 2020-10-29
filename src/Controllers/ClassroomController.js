@@ -73,7 +73,7 @@ module.exports ={
         const verifyId = await connection("classroom").where("id", id).select("name").first();
 
         if(!verifyId)
-            return response.status(401).json({message: "Classroom not found"});
+            return response.status(404).json({message: "Classroom not found"});
         
         await connection("classroom").where("id", id).delete();
 

@@ -106,7 +106,7 @@ module.exports ={
         const verify_instituition = await connection("instituition").where("id", id).select("*").first();
 
         if(!verify_instituition)
-            return response.status(400).json({message: "Instituition not found"});
+            return response.status(404).json({message: "Instituition not found"});
         
         const {
             name,
@@ -121,23 +121,13 @@ module.exports ={
             uf,
         } = request.body;
 
-        let { newPassword, repeatNewPassword, olderPass } = request.body;
+        let { password } = request.body;
         let setOlderPass = verify_instituition.password;
 
-        const compare = bcrypt.compareSync(olderPass, setOlderPass);
-
+        const compare = bcrypt.compareSync(password, setOlderPass);
+    
         if(compare === false)
-            return response.status(401).json({message: "your old password is wrong, please try again!"});
-
-        if(newPassword!==repeatNewPassword)
-            return response.status(401).json({message: "your new passwords don't match, please try again!"});
-
-
-        const salt = bcrypt.genSaltSync(16);
-        const hash = bcrypt.hashSync(newPassword, salt);
-
-        newPassword = hash;
-        let password = newPassword;
+            return response.status(401).json({message: "your password is wrong, please try again!"});
 
         await connection("instituition").update({
                 name,
@@ -150,7 +140,6 @@ module.exports ={
                 CEP,
                 city,
                 uf,
-                password
             }).where({ id })
 
         return response.status(200).json({send: "sucessfull"});
@@ -162,7 +151,7 @@ module.exports ={
         const verifyId = await connection("instituition").where("id", id).first();
 
         if(!verifyId)
-            return response.status(401).json({message: "Instituition not found"});
+            return response.status(404).json({message: "Instituition not found"});
         
         await connection("instituition").where("id", id).delete();
 
