@@ -35,7 +35,8 @@ routes.put('/instituitions/update/:id', instituitionController.update);
 routes.delete('/instituitions/delete/:id', instituitionController.delete);
 
 //Rotas dedicadas as Controle de Senhas
-routes.put('/instituition/changepassword/:id', passwordController.update_pass_instituition);
+routes.put('/instituitions/changepassword/:id', passwordController.update_pass_instituition);
+routes.put('/user/changepassword/:id', passwordController.update_pass_user);
 
 //Rotas Dedicadas as Salas de aula
 routes.get('/classroom', classroomController.show);
