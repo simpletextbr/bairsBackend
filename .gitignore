@@ -13,3 +13,20 @@ jspm_packages/
 # dotenv environment variables file
 .env
 .env.test
+
+# Images
+uploads/images/*.jpg
+uploads/images/*.png
+uploads/images/*.jpeg
+uploads/profiles_pictures/*.jpg
+uploads/profiles_pictures/*.png
+uploads/profiles_pictures/*.jpeg
+uploads/registration_paths/*.jpg
+uploads/registration_paths/*.png
+uploads/registration_paths/*.jpeg
+uploads/registration_paths/*.pdf
+
+
+
+
+
