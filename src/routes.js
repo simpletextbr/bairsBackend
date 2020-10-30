@@ -11,6 +11,7 @@ const instituitionController = require('./Controllers/InstituitionController');
 const classroomController = require("./Controllers/ClassroomController")
 const passwordController = require("./Controllers/PasswordController");
 const categoryController = require("./Controllers/CagegoryController");
+const productController = require("./Controllers/ProductController");
 
 const routes = express.Router();
 
@@ -21,7 +22,7 @@ const uploadImages = multer(uploadConfigImages)
 
 
 //Rotas Dedicadas aos Usuarios
-routes.get('/user', userController.show);
+routes.get('/users', userController.show);
 routes.get('/user/:id', userController.index);
 routes.post('/user/register', uploadPhoto.single("profile_path"), userController.create);
 routes.put('/user/update/:id', userController.update);
@@ -40,28 +41,24 @@ routes.put('/instituitions/changepassword/:id', passwordController.update_pass_i
 routes.put('/user/changepassword/:id', passwordController.update_pass_user);
 
 //Rotas Dedicadas as Salas de aula
-routes.get('/classroom', classroomController.show);
+routes.get('/classrooms', classroomController.show);
 routes.get('/classroom/:id', classroomController.index);
 routes.post('/classroom/register', classroomController.create);
 routes.put('/classroom/update/:id', classroomController.update);
 routes.delete('/classroom/delete/:id', classroomController.delete);
 
 //Rotas Dedicadas as Categorias
-routes.get('/category', categoryController.show);
+routes.get('/categorys', categoryController.show);
 routes.get('/category/:id', categoryController.index);
 routes.post('/category/register', categoryController.create);
 routes.put('/category/update/:id', categoryController.update);
 routes.delete('/category/delete/:id', categoryController.delete);
 
-
-
-
-
-
-
-
-
-
-
+//Rotas Dedicadas aos Produtos
+routes.get('/products', productController.show);
+routes.get('/product/:id', productController.index);
+routes.post('/product/register',uploadImages.array('images') , productController.create);
+routes.put('/product/update/:id', productController.update);
+//routes.delete('/product/delete/:id', productController.delete);
 
 module.exports = routes;
