@@ -9,6 +9,7 @@ exports.up = function(knex) {
         colunm.string("password").notNullable();
         colunm.string("situation").notNullable();
         colunm.string("genre").notNullable();
+        colunm.string("cpf").notNullable();
         colunm.string("period").notNullable();
         colunm.string("study_shift").notNullable();
         colunm.integer("rate")

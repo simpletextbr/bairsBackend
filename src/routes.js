@@ -28,7 +28,6 @@ routes.post('/user/register', uploadPhoto.single("profile_path"), userController
 routes.put('/user/update/:id', userController.update);
 routes.delete('/user/delete/:id', userController.delete);
 
-
 //Rotas Dedicadas as Instituições
 routes.get('/instituitions', instituitionController.show);
 routes.get('/instituitions/:id', instituitionController.index);
@@ -59,6 +58,9 @@ routes.get('/products', productController.show);
 routes.get('/product/:id', productController.index);
 routes.post('/product/register',uploadImages.array('images') , productController.create);
 routes.put('/product/update/:id', productController.update);
-//routes.delete('/product/delete/:id', productController.delete);
+routes.delete('/product/delete/:id', productController.delete);
+
+//Rotas Dedicadas as Images
+
 
 module.exports = routes;

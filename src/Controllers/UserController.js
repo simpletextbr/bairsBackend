@@ -6,18 +6,15 @@ module.exports = {
         const { id }  = request.params;
 
         const user = await connection("user").where("id", id).select(
-            "id",
             "full_name",
             "username",
             "birth",
             "phone",
             "mail",
-            "situation",
             "genre",
             "period",
             "study_shift",
             "rate",
-            "registration_path",
             "profile_path",
             "instituition_id",
             "classroom_id"
@@ -32,10 +29,16 @@ module.exports = {
     async show(request, response) {
         const id = request.headers.authorization;
 
-        const verify_user = await connection('user').where("id", id).select("id", "username");
+        const verify_user = await connection('user').where("id", id).select("id", "username", "situation");
 
         if(!verify_user[0])
             return response.status(401).json({message: "Unauthorized"});
+        
+        if(verify_user.situation==="Unauthorized")
+            return response.status(401).json({message: "Unauthorized"});
+        
+        if(verify_user.situation==="Analyzing")
+            return response.status(401).json({message: "wait to finish to analyze your registration" });
 
         const user = await connection("user").select(
             "id",
@@ -46,6 +49,7 @@ module.exports = {
             "mail",
             "situation",
             "genre",
+            "cpf",
             "period",
             "study_shift",
             "rate",
@@ -72,7 +76,8 @@ module.exports = {
             period,
             study_shift,
             instituition_id,
-            classroom_id
+            classroom_id,
+            cpf
         } = request.body;
 
         const  situation  = "Unauthorized";
@@ -105,7 +110,8 @@ module.exports = {
                 profile_path,
                 password,
                 instituition_id,
-                classroom_id
+                classroom_id,
+                cpf
             })
 
             return response.status(200).json({send: "sucessfull"});
@@ -133,6 +139,8 @@ module.exports = {
             genre,
             period,
             study_shift,
+            classroom_id,
+            instituition_id
         } = request.body;
 
         let { password } = request.body;
@@ -151,7 +159,9 @@ module.exports = {
             mail,
             genre,
             period,
-            study_shift
+            study_shift,
+            classroom_id,
+            instituition_id
             }).where({ id })
 
         return response.status(200).json({send: "sucessfull"});

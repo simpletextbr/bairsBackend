@@ -1,3 +1,4 @@
+const { as } = require("../database/conection");
 const connection = require("../database/conection");
 
 module.exports = {
@@ -134,6 +135,22 @@ module.exports = {
     },
 
     async delete(request, response) {
+        const { id } = request.params;
 
-        }
+        const verify_product = await connection("product").where("id", id).first();
+
+        if(!verify_product)
+            return response.status(404).json({message: "product not found"});
+        
+        await connection("product").where("id", id).delete();
+
+        const product_id = id;
+        const images = await connection("images").where("product_id", product_id).select("product_id");
+
+        await images.map(async()=> {
+            await connection('images').where("product_id", product_id).delete()
+        })
+
+        return response.status(204).send();
+    }
 }
