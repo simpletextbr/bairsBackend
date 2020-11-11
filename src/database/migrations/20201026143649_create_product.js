@@ -6,6 +6,9 @@ exports.up = function(knex) {
         colunm.decimal("price").notNullable();
         colunm.integer("rate");
 
+        colunm.integer("user_id").notNullable();
+        colunm.foreign("user_id").references("id").inTable("user");
+
         colunm.integer("category_id").notNullable();
         colunm.foreign("category_id").references("id").inTable("category");
     })

@@ -35,12 +35,14 @@ module.exports = {
 
         if(!verify_user[0])
             return response.status(401).json({message: "Unauthorized"});
+        
+        const user_id = verify_user[0].id
 
         const { 
             title,
             description,
             price,
-            category_id
+            category_id,
         } = request.body;
 
         
@@ -55,7 +57,8 @@ module.exports = {
             title,
             description,
             price,
-            category_id
+            category_id,
+            user_id
         })
 
         const product_id = product;
@@ -84,9 +87,9 @@ module.exports = {
 
     async update(request, response) {
         const { id } = request.params;
-        const userid  = request.headers.authorization;
+        const user_id  = request.headers.authorization;
 
-        const verify_user = await connection("user").where("id", userid).select('situation').first();
+        const verify_user = await connection("user").where("id", user_id).select('situation').first();
         const verify_product = await connection('product').where("id", id).select("*").first();
 
         if(!verify_user)
@@ -102,13 +105,11 @@ module.exports = {
             category_id
         } = request.body;
 
-        const requestImages = request.files;
-
         await connection("product").update({
             title,
             description,
             price,
-            category_id
+            category_id,
         }).where("id", verify_product.id)
 
         return response.status(200).json({message: "sucessfull"})
