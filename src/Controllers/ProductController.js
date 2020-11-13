@@ -117,15 +117,20 @@ module.exports = {
 
     async delete(request, response) {
         const { id } = request.params;
+        const user_id = request.headers.authorization;
 
         const verify_product = await connection("product").where("id", id).first();
 
         if(!verify_product)
             return response.status(404).json({message: "product not found"});
+
+        if(user_id !== verify_product.user_id)
+            return response.status(401).json({message: "Unauthorized"}); 
         
         await connection("product").where("id", id).delete();
 
         const product_id = id;
+        
         const images = await connection("images").where("product_id", product_id).select("product_id");
 
         await images.map(async()=> {
