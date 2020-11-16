@@ -14,13 +14,6 @@ module.exports ={
     },
 
     async show(request, response) {
-        const id = request.headers.authorization;
-
-        const verify_user = await connection('user').where("id", id).select("id", "username");
-
-        if(!verify_user[0])
-            return response.status(401).json({message: "Unauthorized"});
-
         const classroom = await connection("classroom").select('*');
 
         if(!classroom[0])
