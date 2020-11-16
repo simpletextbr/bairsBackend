@@ -14,7 +14,9 @@ module.exports ={
     },
 
     async show(request, response) {
-        const classroom = await connection("classroom").select('*');
+        const { id } = request.headers.authorization;
+        
+        const classroom = await connection("classroom").select('*').where("instituition_id", id);
 
         if(!classroom[0])
             return response.status(404).json({message: "No classroom here!"});
