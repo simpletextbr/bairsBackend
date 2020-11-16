@@ -14,8 +14,8 @@ module.exports ={
     },
 
     async show(request, response) {
-        const { id } = request.headers.authorization;
-        
+        const id = request.headers.authorization;
+
         const classroom = await connection("classroom").select('*').where("instituition_id", id);
 
         if(!classroom[0])
