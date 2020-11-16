@@ -26,14 +26,6 @@ module.exports ={
     },
 
     async show(request, response) {
-        const id = request.headers.authorization;
-
-        const verify_user = await connection('user').where("id", id).select("id", "username").first();
-                console.log(verify_user)
-
-        if(!verify_user)
-            return response.status(404).json({message: "Unauthorized"});
-
         const instituition = await connection("instituition").select(
             "id",
             'name',
@@ -49,7 +41,7 @@ module.exports ={
             );
 
         if(!instituition[0])
-            return response.status(401).json({message: "Unauthorized"});
+            return response.status(404).json({message: "Not Instituition here!"});
 
         return response.status(200).json(instituition)
     },
