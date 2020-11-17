@@ -6,15 +6,19 @@ module.exports = {
         const { id }  = request.params;
 
         const user = await connection("user").where("id", id).select(
+            "id",
             "full_name",
             "username",
             "birth",
             "phone",
             "mail",
+            "situation",
             "genre",
+            "cpf",
             "period",
             "study_shift",
             "rate",
+            "registration_path",
             "profile_path",
             "instituition_id",
             "classroom_id"
