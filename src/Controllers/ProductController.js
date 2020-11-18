@@ -42,6 +42,7 @@ module.exports = {
             title,
             description,
             price,
+            type,
             category_id,
         } = request.body;
 
@@ -57,6 +58,7 @@ module.exports = {
             title,
             description,
             price,
+            type,
             category_id,
             user_id
         })
@@ -102,6 +104,7 @@ module.exports = {
             title,
             description,
             price,
+            type,
             category_id
         } = request.body;
 
@@ -109,6 +112,7 @@ module.exports = {
             title,
             description,
             price,
+            type,
             category_id,
         }).where("id", verify_product.id)
 
