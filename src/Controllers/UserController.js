@@ -156,9 +156,7 @@ module.exports = {
 
         if(setOlderinstituition_id === instituition_id){
         await connection("user").update({
-            full_name,
             username,
-            birth,
             phone,
             mail,
             genre,
@@ -173,9 +171,7 @@ module.exports = {
             const situation = "Unauthorized";
 
             await connection("user").update({
-                full_name,
                 username,
-                birth,
                 phone,
                 mail,
                 genre,
