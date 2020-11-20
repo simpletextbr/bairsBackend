@@ -63,7 +63,7 @@ routes.delete('/category/delete/:id', categoryController.delete);
 
 //Rotas Dedicadas aos Produtos
 routes.get('/products', productController.show);
-routes.get('/product/:id', productController.index);
+routes.get('/product', productController.index);
 routes.post('/product/register', uploadImages.array('images'), productController.create);
 routes.put('/product/update/:id', uploadImages.array('images'), productController.update);
 routes.delete('/product/delete/:id', productController.delete);

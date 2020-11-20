@@ -4,7 +4,7 @@ module.exports = {
     async index(request, response) {
         const { title }  = request.query;
 
-        const product = await connection("product").where("title", title).select('*');
+        const product = await connection("product").where('title', 'like', `%${title}%`).select('*');
 
         if(!product[0])
             return response.status(404).json({message: "Product not found"});
@@ -128,7 +128,7 @@ module.exports = {
         if(!verify_product)
             return response.status(404).json({message: "product not found"});
 
-        if(user_id !== verify_product.user_id)
+        if(user_id !== String(verify_product.user_id))
             return response.status(401).json({message: "Unauthorized"}); 
         
         await connection("product").where("id", id).delete();
