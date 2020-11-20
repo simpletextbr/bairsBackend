@@ -12,6 +12,17 @@ module.exports = {
         return response.status(200).json(product)
     },
 
+    async showUnique(request, response) {
+        const { id }  = request.params;
+
+        const product = await connection("product").where('id', id).select('*');
+
+        if(!product[0])
+            return response.status(404).json({message: "Product not found"});
+
+        return response.status(200).json(product)
+    },
+
     async show(request, response) {
         const id = request.headers.authorization;
 
