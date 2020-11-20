@@ -2,9 +2,9 @@ const connection = require("../database/conection");
 
 module.exports = {
     async index(request, response) {
-        const { id }  = request.params;
+        const { title }  = request.query;
 
-        const product = await connection("product").where("id", id).select('*');
+        const product = await connection("product").where("title", title).select('*');
 
         if(!product[0])
             return response.status(404).json({message: "Product not found"});
@@ -137,7 +137,7 @@ module.exports = {
         
         const images = await connection("images").where("product_id", product_id).select("product_id");
 
-        await images.map(async()=> {
+        images.map(async()=> {
             await connection('images').where("product_id", product_id).delete()
         })
 
